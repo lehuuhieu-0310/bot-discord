@@ -39,55 +39,55 @@ function getImage(message) {
 }
 
 
-async function tisobongda(msg) {
-    if (msg.content === '!hello') {
-        var userTag = msg.member.user.tag.split('#')[0]
-        msg.reply(`hello anh ${userTag}`)
-    } else if (msg.content === '!tiso') {
-        setInterval(async () => {
-            let url = process.env.REALTIME_CHANGE
-            await axios
-                .get(url)
-                .then(async (response) => {
-                    var list = response.data.changeList
-                    if (list != null) {
-                        for (let i = 0; i < list.length; i++) {
-                            if (list[i].matchId == process.env.MATCHID) {
-                                var homeScore = list[i].homeScore
-                                var homeEn = list[i].homeEn
-                                var awayScore = list[i].awayScore
-                                var awayEn = list[i].awayEn
+// async function tisobongda(msg) {
+//     if (msg.content === '!hello') {
+//         var userTag = msg.member.user.tag.split('#')[0]
+//         msg.reply(`hello anh ${userTag}`)
+//     } else if (msg.content === '!tiso') {
+//         setInterval(async () => {
+//             let url = process.env.REALTIME_CHANGE
+//             await axios
+//                 .get(url)
+//                 .then(async (response) => {
+//                     var list = response.data.changeList
+//                     if (list != null) {
+//                         for (let i = 0; i < list.length; i++) {
+//                             if (list[i].matchId == process.env.MATCHID) {
+//                                 var homeScore = list[i].homeScore
+//                                 var homeEn = list[i].homeEn
+//                                 var awayScore = list[i].awayScore
+//                                 var awayEn = list[i].awayEn
 
-                                var lastMessage
-                                await msg.channel.messages
-                                    .fetch({ limit: 1 })
-                                    .then((message) => {
-                                        console.log(message.first().content)
-                                        lastMessage = message.first().content.slice(7)
-                                    })
-                                    .catch((err) => console.log(err))
+//                                 var lastMessage
+//                                 await msg.channel.messages
+//                                     .fetch({ limit: 1 })
+//                                     .then((message) => {
+//                                         console.log(message.first().content)
+//                                         lastMessage = message.first().content.slice(7)
+//                                     })
+//                                     .catch((err) => console.log(err))
 
-                                var hardTime = moment('23:00', 'HH:mm')
-                                //time now
-                                var now = moment()
-                                var minutes = Math.floor(now.diff(hardTime) / 60000)
+//                                 var hardTime = moment('23:00', 'HH:mm')
+//                                 //time now
+//                                 var now = moment()
+//                                 var minutes = Math.floor(now.diff(hardTime) / 60000)
 
-                                if (minutes < 10) {
-                                    minutes = '0' + minutes
-                                }
+//                                 if (minutes < 10) {
+//                                     minutes = '0' + minutes
+//                                 }
 
-                                var output = 'Switzerland : ' + homeScore + '    -   Spain : ' + awayScore
-                                console.log(lastMessage)
-                                if (lastMessage != output) {
-                                    return msg.channel.send(`${minutes}'    ${output}`)
-                                }
-                            }
-                        }
-                    }
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        }, 10000)
-    }
-}
+//                                 var output = 'Switzerland : ' + homeScore + '    -   Spain : ' + awayScore
+//                                 console.log(lastMessage)
+//                                 if (lastMessage != output) {
+//                                     return msg.channel.send(`${minutes}'    ${output}`)
+//                                 }
+//                             }
+//                         }
+//                     }
+//                 })
+//                 .catch((error) => {
+//                     console.log(error)
+//                 })
+//         }, 10000)
+//     }
+// }
