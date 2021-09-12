@@ -22,12 +22,11 @@ function getImage(message) {
 
     if (content == 'image suzy') {
         const random = Math.floor(Math.random() * listSuzyImage.length)
-        const attachment = new MessageAttachment(`${process.env.URL_IMAGE}/suzy/${listSuzyImage[random]}`)
-        message.reply('this is images ', attachment)
+        message.reply({ content: 'This is a image of Suzy', files: [{ attachment: `${process.env.URL_IMAGE}/suzy/${listSuzyImage[random]}` }] })
     } else if (content == "image IU") {
         const random = Math.floor(Math.random() * listIUImage.length)
-        const attachment = new MessageAttachment(`${process.env.URL_IMAGE}/IU/${listIUImage[random]}`)
-        message.reply('this is images ', attachment)
+        message.reply({ content: 'This is a image of IU', files: [{ attachment: `${process.env.URL_IMAGE}/IU/${listIUImage[random]}` }] })
+
     } else if (content == 'help') {
         const helpMessage =
             `Commands:
