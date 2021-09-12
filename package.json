@@ -19,9 +19,11 @@
     "license": "ISC",
     "devDependencies": {
         "axios": "^0.21.1",
-        "discord.js": "^13.1.0",
-        "dotenv": "^10.0.0",
         "moment": "^2.29.1",
         "node-fetch": "^2.6.1"
+    },
+    "dependencies": {
+        "discord.js": "^13.1.0",
+        "dotenv": "^10.0.0"
     }
 }
