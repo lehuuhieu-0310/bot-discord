@@ -1,7 +1,7 @@
 const { Client, MessageAttachment, Intents } = require('discord.js')
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] })
-const axios = require('axios')
-const moment = require('moment')
+// const axios = require('axios')
+// const moment = require('moment')
 require('dotenv').config()
 
 //token of discord bot
