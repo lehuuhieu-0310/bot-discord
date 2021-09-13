@@ -1,7 +1,5 @@
-const { Client, MessageAttachment, Intents } = require('discord.js')
+const { Client, Intents, MessageEmbed } = require('discord.js')
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] })
-// const axios = require('axios')
-// const moment = require('moment')
 require('dotenv').config()
 
 //token of discord bot
@@ -20,73 +18,36 @@ function getImage(message) {
 
     const content = message.content
 
-    if (content == 'image suzy') {
+    if (content == '$image suzy') {
         const random = Math.floor(Math.random() * listSuzyImage.length)
-        message.reply({ content: 'This is a image of Suzy', files: [{ attachment: `${process.env.URL_IMAGE}/suzy/${listSuzyImage[random]}` }] })
-    } else if (content == "image IU") {
-        const random = Math.floor(Math.random() * listIUImage.length)
-        message.reply({ content: 'This is a image of IU', files: [{ attachment: `${process.env.URL_IMAGE}/IU/${listIUImage[random]}` }] })
 
-    } else if (content == 'help') {
-        const helpMessage =
-            `Commands:
-        'image suzy': image of suzy
-        'iamge IU': image of IU
-        'image CucTieuY': image of Cúc Tiểu Y`
-        message.channel.send(helpMessage)
+        const imageMessageEmbed = new MessageEmbed()
+            .setColor('#FF7F9D')
+            .setImage(`${process.env.URL_IMAGE}/suzy/${listSuzyImage[random]}`)
+            .setTimestamp()
+            .setFooter('crawl in the internet')
+        message.reply({ embeds: [imageMessageEmbed] })
+
+    } else if (content == '$image IU') {
+        const random = Math.floor(Math.random() * listIUImage.length)
+        const imageMessageEmbed = new MessageEmbed()
+            .setColor('#FF7F9D')
+            .setImage(`${process.env.URL_IMAGE}/IU/${listIUImage[random]}`)
+            .setTimestamp()
+            .setFooter('crawl in the internet')
+        message.reply({ embeds: [imageMessageEmbed] })
+
+    } else if (content == '$help') {
+        message.reply({ embeds: [helpMessageEmbed] })
     }
 }
 
-
-// async function tisobongda(msg) {
-//     if (msg.content === '!hello') {
-//         var userTag = msg.member.user.tag.split('#')[0]
-//         msg.reply(`hello anh ${userTag}`)
-//     } else if (msg.content === '!tiso') {
-//         setInterval(async () => {
-//             let url = process.env.REALTIME_CHANGE
-//             await axios
-//                 .get(url)
-//                 .then(async (response) => {
-//                     var list = response.data.changeList
-//                     if (list != null) {
-//                         for (let i = 0; i < list.length; i++) {
-//                             if (list[i].matchId == process.env.MATCHID) {
-//                                 var homeScore = list[i].homeScore
-//                                 var homeEn = list[i].homeEn
-//                                 var awayScore = list[i].awayScore
-//                                 var awayEn = list[i].awayEn
-
-//                                 var lastMessage
-//                                 await msg.channel.messages
-//                                     .fetch({ limit: 1 })
-//                                     .then((message) => {
-//                                         console.log(message.first().content)
-//                                         lastMessage = message.first().content.slice(7)
-//                                     })
-//                                     .catch((err) => console.log(err))
-
-//                                 var hardTime = moment('23:00', 'HH:mm')
-//                                 //time now
-//                                 var now = moment()
-//                                 var minutes = Math.floor(now.diff(hardTime) / 60000)
-
-//                                 if (minutes < 10) {
-//                                     minutes = '0' + minutes
-//                                 }
-
-//                                 var output = 'Switzerland : ' + homeScore + '    -   Spain : ' + awayScore
-//                                 console.log(lastMessage)
-//                                 if (lastMessage != output) {
-//                                     return msg.channel.send(`${minutes}'    ${output}`)
-//                                 }
-//                             }
-//                         }
-//                     }
-//                 })
-//                 .catch((error) => {
-//                     console.log(error)
-//                 })
-//         }, 10000)
-//     }
-// }
+const helpMessageEmbed = new MessageEmbed()
+    .setColor('#FF7F9D')
+    .setAuthor('MyBot Commands', process.env.AVATAR, '')
+    .setThumbnail(process.env.AVATAR)
+    .addFields(
+        { name: 'Image Of Suzy', value: '$image suzy', inline: true },
+        { name: 'Image Of IU', value: '$image IU', inline: true },
+    )
+    .setTimestamp()
