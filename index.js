@@ -1,5 +1,6 @@
 const { Client, Intents, MessageEmbed } = require('discord.js')
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] })
+const axios = require('axios').default
 require('dotenv').config()
 
 //token of discord bot
@@ -13,39 +14,33 @@ client.on('messageCreate', getImage)
 
 function getImage(message) {
 
-    const listSuzyImage = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg']
-    const listIUImage = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg']
+    const content = message.content.split(" ")
 
-    const content = message.content
+    if (content[0] == '$image') {
+        const name = content[1] || []
+        if (name.length == 0) return
+        else {
+            axios.get(`${process.env.API_IMAGE}/${name}`)
+                .then((data) => {
+                    const imageMessageEmbed = new MessageEmbed()
+                        .setColor('#FF7F9D')
+                        .setImage(data.data.image_url)
+                        .setTimestamp()
+                        .setFooter('crawl in the internet')
+                    message.reply({ embeds: [imageMessageEmbed] })
+                })
+                .catch(error => message.reply('Not Found'))
 
-    if (content == '$image suzy') {
-        const random = Math.floor(Math.random() * listSuzyImage.length)
-
-        const imageMessageEmbed = new MessageEmbed()
-            .setColor('#FF7F9D')
-            .setImage(`${process.env.URL_IMAGE}/suzy/${listSuzyImage[random]}`)
-            .setTimestamp()
-            .setFooter('crawl in the internet')
-        message.reply({ embeds: [imageMessageEmbed] })
-
-    } else if (content == '$image IU') {
-        const random = Math.floor(Math.random() * listIUImage.length)
-        const imageMessageEmbed = new MessageEmbed()
-            .setColor('#FF7F9D')
-            .setImage(`${process.env.URL_IMAGE}/IU/${listIUImage[random]}`)
-            .setTimestamp()
-            .setFooter('crawl in the internet')
-        message.reply({ embeds: [imageMessageEmbed] })
-
-    } else if (content == '$help') {
+        }
+    } else if (content[0] == '$help') {
         message.reply({ embeds: [helpMessageEmbed] })
     }
 }
 
 const helpMessageEmbed = new MessageEmbed()
     .setColor('#FF7F9D')
-    .setAuthor('MyBot Commands', process.env.AVATAR, '')
-    .setThumbnail(process.env.AVATAR)
+    .setAuthor('MyBot Commands', `${process.env.URL_IMAGE}/suzy/2.jpg`, '')
+    .setThumbnail(`${process.env.URL_IMAGE}/suzy/2.jpg`)
     .addFields(
         { name: 'Image Of Suzy', value: '$image suzy', inline: true },
         { name: 'Image Of IU', value: '$image IU', inline: true },
